@@ -2,8 +2,23 @@
  
 include('leftbar.php');
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   $from_date = $_POST["from_date"];
+   $to_date = $_POST["to_date"];
+   $course = $_POST["course"];
+  
+   $sql = "SELECT * FROM tbl_recipt_record";
+   if($from_date && $to_date && $course != "none"){
+    $sql = $sql . " WHERE recipt_date >= '$from_date' AND recipt_date <= '$to_date' AND course = '$course'";
+   }elseif($from_date && $to_date && $course == "none"){
+    $sql = $sql . " WHERE recipt_date >= '$from_date' AND recipt_date <= '$to_date'";
+   }elseif($course != "none"){
+    $sql = $sql . " where course = '$course'";
+   }
+  }else{
+    $sql = "SELECT * FROM tbl_recipt_record";
+}
 
-$sql = "SELECT * FROM tbl_recipt_record";
 $res = $conn->query($sql);
 
 $conn->close();
@@ -18,8 +33,36 @@ $conn->close();
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal" id="record_filter" method="POST" action="record.php">
+                                <div class="col-md-3">
+                                <label class="control-label">FROM DATE : </label></td><td>
+											<input type="date" name="from_date" class="form-control" value=""/>
+</div>
+<div class="col-md-3">
+                                <label class="control-label">TO DATE : </label></td><td>
+											<input type="date" name="to_date" class="form-control" value=""/>
+</div>
+<div class="col-md-3">
+<label class="control-label">COURSE :</label></td>
+											<td><select class="form-control" name="course" required>
+											<option value="none">-------</option>
+												<option value="BCOM">BCOM</option>
+												<option value="BBA">BBA</option>
+												<option value="BCA">BCA</option>
+												<option value="BSC_CHEMISTRY">BSC CHEMISTRY</option>
+												<option value="BSC_MICROBIOLOGY">BSC MICROBIOLOGY</option>
+											</select>
+</div>
+<div class= "col-md-3" style="padding-top:25px">
+    <input class="btn btn-primary" type="submit" value="SUBMIT" id="btn-filter"/>
+    <input class="btn btn-primary" type="submit" value="RESET" id="btn-filter"/>
+</div>
+                                </form>    
+                            </div>
+                            <hr/>
                             <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <table class="table table-striped table-bordered table-hover" id="tbl_record">
                                     <thead>
                                         <tr>
                                             <th>Recipt Number</th>

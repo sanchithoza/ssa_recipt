@@ -29,6 +29,9 @@ if ($conn->connect_error) {
 <link href="dist/css/sb-admin-2.css" rel="stylesheet">
 <!-- Custom Fonts -->
 <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="bower_components/datatable/datatables.min.css"/>
+ 
+
 <style type="text/css">
     .transaction td{
         padding: 0px!important;

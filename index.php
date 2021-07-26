@@ -117,7 +117,7 @@
 						
 	  $.ajax({  
          type:"POST",  
-         url:"database.php",  
+         url:"insert.php",  
          data:stringData,  
          success:function(data){  
           	window.open(`invoice.php?id=${data}`);
